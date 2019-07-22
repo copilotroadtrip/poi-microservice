@@ -1,6 +1,4 @@
 class Poi < ActiveRecord::Base
-  has_many :trip_pois
-  has_many :trips, through: :trip_pois
 
   validates_presence_of :name, :population, :state,
                         :land_area, :total_area,
