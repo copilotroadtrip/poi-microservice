@@ -1,0 +1,13 @@
+
+development:
+  adapter: postgresql
+  database: poi-service-development
+
+test:
+  adapter: postgresql
+  database: poi-service-test
+
+production:
+  adapter: postgresql
+  database: poi-service-production
+  url: <%= ENV['DATABASE_URL'] %>
