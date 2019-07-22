@@ -6,7 +6,7 @@ gem 'sinatra-activerecord'
 gem 'activerecord'
 gem 'sinatra-contrib'
 gem 'rake'
-gem 'fast_jsonapi'
+gem 'csv'
 
 group :development, :test do
   gem 'capybara', '~> 3.0.3'
