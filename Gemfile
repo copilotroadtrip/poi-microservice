@@ -18,4 +18,5 @@ group :development, :test do
   gem 'rspec'
   gem 'shotgun'
   gem 'tux'
+  gem 'factory_bot'
 end
