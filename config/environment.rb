@@ -15,6 +15,9 @@ Dir.glob(File.join(APP_ROOT, 'app', 'models', '*.rb')).each { |file| require fil
 #requires serializers
 Dir.glob(File.join(APP_ROOT, 'app', 'serializers', '*.rb')).each { |file| require file }
 
+#requires services
+Dir.glob(File.join(APP_ROOT, 'app', 'services', '*.rb')).each { |file| require file }
+
 # require database configurations
 require File.join(APP_ROOT, 'config', 'database')
 

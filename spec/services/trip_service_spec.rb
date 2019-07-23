@@ -1,5 +1,4 @@
 require 'spec_helper'
-require './app/services/trip_service'
 
 describe 'Trip Service' do
   it 'populates database and redis' do
@@ -9,12 +8,12 @@ describe 'Trip Service' do
     $redis.flushdb
 
     # Retrieve step data
-    google_map_service_steps = JSON.load(File.open('./spec/saved_responses/denver_ogden_steps.json'))
+    google_map_service_steps = JSON.load(File.open('./spec/data/denver_ogden_steps.json'))
 
     # POI table populating
     options_hash = {col_sep: ",", headers: true,
       header_converters: :symbol, converters: :numeric}
-    pois = CSV.open('spec/saved_responses/ogden_poi.csv', options_hash)
+    pois = CSV.open('spec/data/ogden_poi.csv', options_hash)
 
     poi_hashes = pois.map{ |row| row.to_hash }
 
@@ -34,12 +33,12 @@ describe 'Trip Service' do
 
     trip_token = "asbasdg"
 
-    TripService.new(google_map_service_steps, trip_token)
+    ts = TripService.new(google_map_service_steps, trip_token)
 
-    expect(TripService.pois.length). to be_between(10,20)
-    expect(TripService.legs.length). to be_between(TripService.pois.length - 1)
+    expect(ts.pois.length). to be_between(10,20)
+    expect(ts.legs.length). to be(ts.pois.length - 1)
 
-    expect($redis.get("trip:#{trip.id}-coord:0")).not_to eq(nil)
-    expect($redis.get("trip:#{trip.id}-coord:1000")).not_to eq(nil)
+    expect($redis.get("trip:#{trip_token}-coord:0")).not_to eq(nil)
+    expect($redis.get("trip:#{trip_token}-coord:1000")).not_to eq(nil)
    end
 end

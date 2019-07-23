@@ -1,11 +1,12 @@
 class TripService
 
-  def initialize(steps, trip_id)
-    @trip = Trip.find(trip_id)
+  attr_reader :pois, :legs, :ready
+  def initialize(steps, trip_token)
+    @trip_token = trip_token
 
     # Initializing aggregator objects
     @poi_collection = PoiCollection.new
-    @coord_collection = CoordCollection.new(@trip.id)
+    @coord_collection = CoordCollection.new(@trip_token)
 
     # Should save coord_collection info (trip_id and max_index) to trip table
     # Will allow for refresh and teardown
@@ -16,13 +17,13 @@ class TripService
     @places = @poi_collection.ordered_pois
 
     # Add places (in order) to trip_pois table
-    save_places
+    @pois = save_places
 
     # Add Legs (in order) to trip_legs table
-    save_legs
+    @legs = save_legs
 
     # Set trip.status = "ready"
-    set_trip_to_ready
+    @ready = true
   end
 
   def parse_steps(steps)
@@ -56,30 +57,32 @@ class TripService
   end
 
   def save_places
+    pois = []
     @places.each_with_index do |poi_info, index|
-      @trip.trip_pois.create(poi: poi_info.poi, sequence_number: index)
+      pois << {poi: poi_info.poi, sequence_number: index}
     end
+    pois
   end
 
   def save_legs
     sequence_number = 1
-
+    legs = []
     # Iterate through each pair of places
     @places.each_cons(2) do |(start_poi, end_poi)|
       segment = [ start_poi.start_coord, end_poi.start_coord ]
 
       # Calculate time + distance with coordinates
       segment_info = @coord_collection.segment_info(*segment)
-      
-      # Save to db
-      @trip.trip_legs.create(
+
+      legs << {
         sequence_number: sequence_number,
         duration:segment_info[:duration],
         distance:segment_info[:distance]
-      )
+      }
 
       sequence_number += 1
     end
+    legs
   end
 
   def set_trip_to_ready
