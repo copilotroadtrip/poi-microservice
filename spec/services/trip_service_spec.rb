@@ -13,7 +13,7 @@ describe 'Trip Service' do
     # POI table populating
     options_hash = {col_sep: ",", headers: true,
       header_converters: :symbol, converters: :numeric}
-    pois = CSV.open('spec/requests/api/v1/ogden_poi.csv', options_hash)
+    pois = CSV.open('spec/saved_responses/ogden_poi.csv', options_hash)
 
     poi_hashes = pois.map{ |row| row.to_hash }
 
@@ -31,15 +31,13 @@ describe 'Trip Service' do
 
     end
 
-    trip = Trip.create
+    trip_token = "asbasdg"
 
-    TripService.new(google_map_service_steps, trip.id)
+    TripService.new(google_map_service_steps, trip_token)
 
-    expect(Trip.count).to eq(1)
-    expect(TripPoi.count).to be_between(10,20)
-    expect(TripLeg.count).to be(TripPoi.count - 1)
-    trip = Trip.find(trip.id)
-    expect(trip.status).to eq("ready")
+    expect(TripService.pois.length). to be_between(10,20)
+    expect(TripService.legs.length). to be_between(TripService.pois.length - 1)
+
     expect($redis.get("trip:#{trip.id}-coord:0")).not_to eq(nil)
     expect($redis.get("trip:#{trip.id}-coord:1000")).not_to eq(nil)
    end
