@@ -7,7 +7,7 @@ gem 'activerecord'
 gem 'sinatra-contrib'
 gem 'rake'
 gem 'csv'
-
+gem 'redis'
 group :development, :test do
   gem 'capybara', '~> 3.0.3'
   gem 'database_cleaner'

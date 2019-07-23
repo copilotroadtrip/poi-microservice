@@ -2,7 +2,6 @@ require 'spec_helper'
 
 RSpec.describe Poi, type: :model do
   before :each do
-    # binding.pry
     @poi_1 = create(:poi,
       sw_latitude: 0, sw_longitude: 0,ne_latitude: 2, ne_longitude: 2, population: 1_000
     )

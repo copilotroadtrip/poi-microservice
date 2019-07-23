@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.require
 
+$redis = Redis.new(url: ENV['REDIS_URL'])
+
 # get the path of the root of the app
 APP_ROOT = File.expand_path("..", __dir__)
 
