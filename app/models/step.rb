@@ -27,7 +27,7 @@ class Step
 
 
   def step_dist(step)
-    # binding.pry
+    # 
     step[:distance][:value]
   end
 

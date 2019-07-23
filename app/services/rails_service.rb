@@ -29,7 +29,7 @@ class RailsService
   end
 
   def status_update
-    binding.pry
+    #
     conn.patch("/api/v1/trips", json({token: @token, status: "ready"}))
   end
 end
