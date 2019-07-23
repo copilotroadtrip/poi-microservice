@@ -39,10 +39,10 @@ class TripService
   def parse_step(step, coordinate_index)
     step.coordinates.each_with_index do |coordinate, step_c_index|
       if step_c_index != 0 # First coordinate of each step is a repeat
-
+        puts coordinate.to_a
         # Find POIs at location
         point_pois = Poi.poi_at_location(*coordinate.to_a)
-
+        puts point_pois.length
         # Update POICollector with new points
         # (POI Collector determines whether or not to store a point)
         @poi_collection.update(point_pois, coordinate_index) if point_pois
