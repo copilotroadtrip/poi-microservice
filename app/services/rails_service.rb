@@ -29,7 +29,6 @@ class RailsService
   end
 
   def status_update
-    #
     conn.patch("/api/v1/trips", json({token: @token, status: "ready"}))
   end
 end
