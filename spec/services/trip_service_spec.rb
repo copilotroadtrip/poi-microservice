@@ -1,4 +1,5 @@
 require 'spec_helper'
+require './app/services/trip_service'
 
 describe 'Trip Service' do
   it 'populates database and redis' do
