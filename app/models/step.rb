@@ -6,7 +6,7 @@ class Step
   def initialize(step)
     @dist = step_dist(step)
     @time = step_time(step)
-    @polyline_string = step['polyline']['points']
+    @polyline_string = step[:polyline][:points]
     @coordinates = all_coordinates.map{ |coord| Coordinate.new(*coord)}
     @coordinate_count = @coordinates.length
   end
@@ -27,10 +27,11 @@ class Step
 
 
   def step_dist(step)
-    step['distance']['value']
+    # binding.pry
+    step[:distance][:value]
   end
 
   def step_time(step)
-    step['duration']['value']
+    step[:duration][:value]
   end
 end

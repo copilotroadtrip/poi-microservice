@@ -58,8 +58,10 @@ class TripService
 
   def save_places
     pois = []
+    last_poi_start_coord = 0
     @places.each_with_index do |poi_info, index|
-      pois << {poi: poi_info.poi, sequence_number: index}
+      duration = @coord_collection.segment_info(last_poi_start_coord, poi_info.start_coord)[:duration]
+      pois << {poi: poi_info.poi, sequence_number: index, time_to_poi: duration}
     end
     pois
   end

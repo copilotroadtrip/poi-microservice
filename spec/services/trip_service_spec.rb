@@ -34,7 +34,7 @@ describe 'Trip Service' do
     trip_token = "asbasdg"
 
     ts = TripService.new(google_map_service_steps, trip_token)
-
+    binding.pry
     expect(ts.pois.length). to be_between(10,20)
     expect(ts.legs.length). to be(ts.pois.length - 1)
 

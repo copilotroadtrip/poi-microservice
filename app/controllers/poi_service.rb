@@ -5,19 +5,22 @@ class PoiServiceApp < Sinatra::Base
 
   post '/api/v1/build_trip' do
     body = JSON.parse(request.body.read, symbolize_names: true)
+    # binding.pry
 
     ts = TripService.new(body[:steps], body[:token])
-
+    rs = rails_service(body[:token])
     ts.legs.each do |leg|
-      rails_service.post_leg(leg)
+      rs.post_leg(leg)
     end
 
     ts.pois.each do |poi|
-      rails_service.post_poi(poi)
+      rs.post_poi(poi)
     end
+
+    rs.status_update
   end
 
-  def rails_service
-    @_rails_service = RailsService.new
+  def rails_service(token)
+    RailsService.new(token) #"http://localhost:3000/")
   end
 end
