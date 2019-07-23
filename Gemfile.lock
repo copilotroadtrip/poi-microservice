@@ -44,6 +44,7 @@ GEM
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
     pg (0.21.0)
+    polylines (0.3.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -118,6 +119,7 @@ DEPENDENCIES
   factory_bot
   launchy
   pg (~> 0.18)
+  polylines
   pry
   rack-test
   rake

@@ -8,6 +8,8 @@ gem 'sinatra-contrib'
 gem 'rake'
 gem 'csv'
 gem 'redis'
+gem 'polylines'
+
 group :development, :test do
   gem 'capybara', '~> 3.0.3'
   gem 'database_cleaner'
