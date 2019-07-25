@@ -40,7 +40,14 @@ class TripService
     step.coordinates.each_with_index do |coordinate, step_c_index|
       if step_c_index != 0 # First coordinate of each step is a repeat
         # Find POIs at location
-        point_pois = Poi.poi_at_location(*coordinate.to_a)
+        # Skip every 30 coordinates, only query db if modulus 30 == 0
+        # Else just set it to an empty array
+        skip_interval = 30
+        if step_c_index % skip_interval == 0
+          point_pois = Poi.poi_at_location(*coordinate.to_a)
+        else
+          point_pois = []
+        end
         # Update POICollector with new points
         # (POI Collector determines whether or not to store a point)
         @poi_collection.update(point_pois, coordinate_index) if point_pois
