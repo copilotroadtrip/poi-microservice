@@ -1,6 +1,6 @@
 class RailsService
 
-  def initialize(token, url = "https://copilot-backend.herokuapp.com/")
+  def initialize(token, url = "http://localhost:3000") # https://copilot-backend.herokuapp.com/
     @token = token
     @url = url
   end
